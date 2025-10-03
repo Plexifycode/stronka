@@ -14,7 +14,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #0e0e0e;
     --foreground: #ededed;
   }
 }
@@ -23,4 +23,22 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.album-page {
+  width: calc(100vw - 24rem);
+  height: calc(100vh - 6rem);
+}
+
+.maskimage {
+  background-image: url('/assets/1-800_oswiecenie_cover.jpg'); /* ⚠️ Use the SAME image */
+  background-size: cover; /* Adjust this as needed: cover, contain, etc. */
+  background-position: center center; /* Center the image */
+  background-repeat: no-repeat;
+  background-clip: content-box;
+  
+  /* The CRUCIAL step: fixes the image relative to the viewport */
+  background-attachment: fixed;
 }
