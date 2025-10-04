@@ -6,17 +6,17 @@ export default function AlbumPage({ imgsrc, id }) {
             <div
                 className="overflow-hidden  rounded-4xl relative border-1 border-white/15 col-span-2 maskimage"
                 style={{ backgroundImage: `url(${imgsrc.src})` }}>
-                <div className="bg-black/70 w-full h-full absolute top-0 left-0 backdrop-blur-md" />
+                <div className="bg-black/50 w-full h-full absolute top-0 left-0 backdrop-blur-md" />
             </div>
             <div
                 className="overflow-hidden  rounded-4xl relative border-1 border-white/15 maskimage"
                 style={{ backgroundImage: `url(${imgsrc.src})` }}>
-                <div className="bg-black/70 w-full h-full absolute top-0 left-0 backdrop-blur-md" />
+                <div className="bg-black/50 w-full h-full absolute top-0 left-0 backdrop-blur-md" />
             </div>
             <div
                 className="overflow-hidden  rounded-4xl relative border-1 border-white/15 maskimage"
                 style={{ backgroundImage: `url(${imgsrc.src})` }}>
-                <div className="bg-black/70 w-full h-full absolute top-0 left-0 backdrop-blur-md" />
+                <div className="bg-black/50 w-full h-full absolute top-0 left-0 backdrop-blur-md" />
             </div>
         </div>
     );
