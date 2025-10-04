@@ -33,12 +33,11 @@ body {
 }
 
 .maskimage {
-  background-image: url('/assets/1-800_oswiecenie_cover.jpg'); /* ⚠️ Use the SAME image */
-  background-size: cover; /* Adjust this as needed: cover, contain, etc. */
-  background-position: center center; /* Center the image */
+  background-image: url('/assets/1-800_oswiecenie_cover.jpg');
+  background-size: cover;
+  background-position: center center;
   background-repeat: no-repeat;
   background-clip: content-box;
   
-  /* The CRUCIAL step: fixes the image relative to the viewport */
   background-attachment: fixed;
 }
