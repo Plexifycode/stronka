@@ -26,6 +26,40 @@ export async function getBearerToken() {
         console.error("can't get bearer :( ", error);
     }
 }
-// export async function getStaticProps(params) {
-//     console.log("mam nadzieje ze spotify mnie nie zabije za testy");
-// }
+
+let access_token = null;
+await getBearerToken().then((data) => {
+    access_token = data.access_token;
+});
+console.log(access_token);
+export async function getAlbumID(query) {
+    try {
+        const response = await fetch(
+            `https://api.spotify.com/v1/search?q=${query}&limit=1&artist=Taco%2520Hemingway&type=album&market=PL`,
+            {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${access_token}`,
+                },
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Spotify API error: ${response.statusText})`);
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error("cant get data", error);
+    }
+}
+export let albumData = [];
+const albumNames = ["1-800-oswiecenie", "jarmark"];
+
+for (let i = 0; i < albumNames.length; i++) {
+    let singleAlbumData = null;
+    await getAlbumID(albumNames[i]).then((data) => {
+        singleAlbumData = data;
+    })
+    albumData.push(singleAlbumData);
+}
