@@ -1,5 +1,5 @@
-import AlbumPage from "./components/AlbumPage";
-import Navigator from "./components/Navigator";
+import AlbumPage from "./components/albumPage";
+import Navigator from "./components/navigator";
 import albumCover1 from "@/public/assets/trojkat_warszawski_cover.jpg";
 import albumCover2 from "@/public/assets/025mg_cover.jpg";
 import albumCover3 from "@/public/assets/cafe_belga_cover.jpg";
