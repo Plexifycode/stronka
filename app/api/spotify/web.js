@@ -31,7 +31,7 @@ let access_token = null;
 await getBearerToken().then((data) => {
     access_token = data.access_token;
 });
-console.log(access_token);
+
 export async function getAlbumID(query) {
     try {
         const response = await fetch(
@@ -53,13 +53,58 @@ export async function getAlbumID(query) {
         console.error("cant get data", error);
     }
 }
-export let albumData = [];
-const albumNames = ["1-800-oswiecenie", "jarmark"];
+export let albumIDs = [];
+const albumNames = [
+    "trojkat warszawski",
+    "0,25mg",
+    "cafe belga",
+    "jarmark",
+    "1-800oswiecenie",
+];
 
-for (let i = 0; i < albumNames.length; i++) {
-    let singleAlbumData = null;
-    await getAlbumID(albumNames[i]).then((data) => {
-        singleAlbumData = data;
-    })
-    albumData.push(singleAlbumData);
+async function fillAlbumIDs() {
+    for (let i = 0; i < albumNames.length; i++) {
+        let albumID = null;
+        await getAlbumID(albumNames[i]).then((data) => {
+            const albumURI = data["albums"]["items"][0]["uri"];
+            albumID = albumURI.replace("spotify:album:", "");
+        });
+        albumIDs.push(albumID);
+    }
 }
+await fillAlbumIDs();
+
+export let albumsData = [];
+export async function getAlbumsData() {
+    let ids = "";
+    for (let i = 0; i < albumIDs.length; i++) {
+        const albumID = albumIDs[i];
+        ids += albumID;
+        if (i !== albumIDs.length - 1) {
+            ids += ",";
+        }
+    }
+    try {
+        const response = await fetch(
+            `https://api.spotify.com/v1/albums?ids=${ids}`,
+            {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${access_token}`,
+                },
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Spotify API error: ${response.statusText})`);
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error("cant get data", error);
+    }
+}
+const test = null;
+await getAlbumsData().then((data) => {
+    albumsData = data["albums"];
+});

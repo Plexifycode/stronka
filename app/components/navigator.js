@@ -6,6 +6,9 @@ const Navigator = function () {
     const navButtons = useRef([]);
     const moveToPage = function (pageIndex) {
         const clickedButton = navButtons.current[pageIndex];
+        if (!clickedButton) {
+            return
+        }
         if (clickedButton.classList.contains("nav-button-active")) {
             return;
         }

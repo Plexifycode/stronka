@@ -3,17 +3,33 @@ import calendar from "@/public/assets/icons/calendar.svg";
 import clock from "@/public/assets/icons/clock.svg";
 import music_note from "@/public/assets/icons/music_note.svg";
 
-export default function AlbumPage({ imgsrc }) {
+export default function AlbumPage({ albumInfo }) {
+    const albumCover = albumInfo["images"][0]["url"];
+    const totalTracks = albumInfo["total_tracks"];
+    const releaseDate = new Date(albumInfo["release_date"]).toLocaleDateString(
+        "pl-PL"
+    );
+    const albumName = albumInfo["name"];
+    const albumID = albumInfo["uri"].replace("spotify:album:", "");
+    const iframeSrc = `https://open.spotify.com/embed/album/${albumID}?utm_source=generator&theme=0`;
+    let durationMs = 0;
+    for (let i = 0; i < albumInfo["tracks"]["items"].length; i++) {
+        durationMs += albumInfo["tracks"]["items"][i]["duration_ms"];
+    }
+    durationMs = durationMs - (durationMs % 1000);
+    let durationS = durationMs / 1000;
+    let albumSeconds = durationS % 60;
+    let albumMinutes = (durationS - albumSeconds) / 60;
     return (
         <div className="relative grid grid-cols-[40%_60%] grid-rows-2 gap-4 album-page w-full h-full px-48 py-12 font-[JetBrains_Mono]">
             <div
                 className="grid grid-cols-[60%_40%] grid-rows-1 grid-flow-col place-items-center overflow-hidden rounded-4xl relative border border-white/15 col-span-2 maskimage p-6"
-                style={{ backgroundImage: `url(${imgsrc.src})` }}>
+                style={{ backgroundImage: `url(${albumCover})` }}>
                 <div className="bg-black/50 z-0 w-full h-full absolute top-0 left-0 backdrop-blur-md" />
                 <div className="relative flex gap-6 z-1 h-full w-full before:absolute before:w-[1px] before:h-[calc(100%+3rem)] before:-top-6 before:right-0 before:bg-white/15">
                     <div className="h-3/5 aspect-square">
                         <Image
-                            src={imgsrc}
+                            src={albumCover}
                             width={640}
                             height={640}
                             alt="smaller album cover"
@@ -21,22 +37,22 @@ export default function AlbumPage({ imgsrc }) {
                     </div>
                     <div className="text-gray-300 h-3/5 grid grid-cols-1 grid-rows-[auto_1fr] gap-8 py-4">
                         <h1 className="text-white text-4xl font-extrabold">
-                            1-800-Oświecenie
+                            {albumName}
                         </h1>
                         <div className="grid grid-cols-1 auto-rows-min gap-2 tracking-wider text-lg">
                             <h3 className="flex gap-3">
                                 <Image src={calendar} alt="calendar"></Image>
-                                21.09.2023
+                                {releaseDate}
                             </h3>
                             <h3 className="flex gap-3">
-                                <Image src={clock} alt="clock"></Image>52min.
-                                42sek.
+                                <Image src={clock} alt="clock"></Image>
+                                {albumMinutes}min. {albumSeconds}sek.
                             </h3>
                             <h3 className="flex gap-3">
                                 <Image
                                     src={music_note}
                                     alt="music note"></Image>
-                                12 tracków
+                                {totalTracks} tracków
                             </h3>
                         </div>
                     </div>
@@ -52,20 +68,18 @@ export default function AlbumPage({ imgsrc }) {
             </div>
             <div
                 className="overflow-hidden rounded-4xl relative border-1 border-white/15 maskimage p-6"
-                style={{ backgroundImage: `url(${imgsrc.src})` }}>
+                style={{ backgroundImage: `url(${albumCover})` }}>
                 <div className="bg-black/50 z-0 w-full h-full absolute top-0 left-0 backdrop-blur-md" />
             </div>
             <div
                 className="overflow-hidden rounded-4xl relative border-1 border-white/15 maskimage p-6"
-                style={{ backgroundImage: `url(${imgsrc.src})` }}>
+                style={{ backgroundImage: `url(${albumCover})` }}>
                 <div className="bg-black/50 z-1 w-full h-full absolute top-0 left-0 backdrop-blur-md" />
                 <iframe
-                    className="relative rounded-lg z-1"
-                    data-testid="embed-iframe"
-                    src="https://open.spotify.com/embed/album/2ItrzcwLrygr4I6wlZ3HGU?utm_source=generator&theme=0"
+                    className="relative h-full rounded-lg z-1"
+                    src={iframeSrc}
                     width="100%"
                     height="100%"
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                     loading="lazy"></iframe>
             </div>
         </div>
