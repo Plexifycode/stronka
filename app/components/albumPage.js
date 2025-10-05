@@ -3,11 +3,9 @@ import calendar from "@/public/assets/icons/calendar.svg";
 import clock from "@/public/assets/icons/clock.svg";
 import music_note from "@/public/assets/icons/music_note.svg";
 
-export default function AlbumPage({ imgsrc, id }) {
+export default function AlbumPage({ imgsrc }) {
     return (
-        <div
-            id={id}
-            className="relative grid grid-cols-[40%_60%] grid-rows-2 gap-4 album-page w-full h-full px-48 py-12 font-[JetBrains_Mono]">
+        <div className="relative grid grid-cols-[40%_60%] grid-rows-2 gap-4 album-page w-full h-full px-48 py-12 font-[JetBrains_Mono]">
             <div
                 className="grid grid-cols-[60%_40%] grid-rows-1 grid-flow-col place-items-center overflow-hidden rounded-4xl relative border border-white/15 col-span-2 maskimage p-6"
                 style={{ backgroundImage: `url(${imgsrc.src})` }}>
@@ -26,9 +24,20 @@ export default function AlbumPage({ imgsrc, id }) {
                             1-800-Oświecenie
                         </h1>
                         <div className="grid grid-cols-1 auto-rows-min gap-2 tracking-wider text-lg">
-                            <h3 className="flex gap-3"><Image src={calendar} alt="calendar"></Image>21.09.2023</h3>
-                            <h3 className="flex gap-3"><Image src={clock} alt="clock"></Image>52min. 42sek.</h3>
-                            <h3 className="flex gap-3"><Image src={music_note} alt="music note"></Image>12 piosenek</h3>
+                            <h3 className="flex gap-3">
+                                <Image src={calendar} alt="calendar"></Image>
+                                21.09.2023
+                            </h3>
+                            <h3 className="flex gap-3">
+                                <Image src={clock} alt="clock"></Image>52min.
+                                42sek.
+                            </h3>
+                            <h3 className="flex gap-3">
+                                <Image
+                                    src={music_note}
+                                    alt="music note"></Image>
+                                12 tracków
+                            </h3>
                         </div>
                     </div>
                 </div>
@@ -44,12 +53,20 @@ export default function AlbumPage({ imgsrc, id }) {
             <div
                 className="overflow-hidden rounded-4xl relative border-1 border-white/15 maskimage p-6"
                 style={{ backgroundImage: `url(${imgsrc.src})` }}>
-                <div className="bg-black/50 w-full h-full absolute top-0 left-0 backdrop-blur-md" />
+                <div className="bg-black/50 z-0 w-full h-full absolute top-0 left-0 backdrop-blur-md" />
             </div>
             <div
                 className="overflow-hidden rounded-4xl relative border-1 border-white/15 maskimage p-6"
                 style={{ backgroundImage: `url(${imgsrc.src})` }}>
-                <div className="bg-black/50 w-full h-full absolute top-0 left-0 backdrop-blur-md" />
+                <div className="bg-black/50 z-1 w-full h-full absolute top-0 left-0 backdrop-blur-md" />
+                <iframe
+                    className="relative rounded-lg z-1"
+                    data-testid="embed-iframe"
+                    src="https://open.spotify.com/embed/album/2ItrzcwLrygr4I6wlZ3HGU?utm_source=generator&theme=0"
+                    width="100%"
+                    height="100%"
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy"></iframe>
             </div>
         </div>
     );
