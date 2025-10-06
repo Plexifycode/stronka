@@ -1,3 +1,4 @@
+import { Arapey } from "next/font/google";
 import React from "react";
 
 export async function getBearerToken() {
@@ -56,6 +57,7 @@ export async function getAlbumID(query) {
 export let albumIDs = [];
 const albumNames = [
     "trojkat warszawski",
+    "marmur",
     "0,25mg",
     "cafe belga",
     "jarmark",
@@ -104,7 +106,94 @@ export async function getAlbumsData() {
         console.error("cant get data", error);
     }
 }
-const test = null;
 await getAlbumsData().then((data) => {
     albumsData = data["albums"];
 });
+
+const excludedArtists = ["Taco Hemingway", "TACONAFIDE", "Lanek", "Gruby Mielzky", "Borucci", "Kacha", "Bebun", "Zeppy Zep", "@atutowy"];
+let featuredArtists = [];
+let allFeaturedArtists = [];
+export let featuredArtistsData = [];
+
+for (let i = 0; i < albumsData.length; i++) {
+    const albumSongs = albumsData[i]["tracks"]["items"];
+    featuredArtists.push(new Array());
+    for (let j = 0; j < albumSongs.length; j++) {
+        const songArtists = albumSongs[j]["artists"];
+        for (let k = 0; k < songArtists.length; k++) {
+            const artistName = songArtists[k]["name"];
+            const artistID = songArtists[k]["id"];
+            if (excludedArtists.includes(artistName)) {
+                continue;
+            }
+            if (featuredArtists[i].includes(artistName)) {
+                continue;
+            }
+            featuredArtists[i].push(artistID);
+        }
+    }
+}
+
+for (let i = 0; i < featuredArtists.length; i++) {
+    if (featuredArtists[i].length === 0) {
+        continue
+    }
+    for (let j = 0; j < featuredArtists[i].length; j++) {
+        if (allFeaturedArtists.includes(featuredArtists[i][j])) {
+            continue
+        }
+        allFeaturedArtists.push(featuredArtists[i][j]);
+    }
+}
+
+let allArtistsData = [];
+export async function getArtistsData() {
+    let ids = "";
+    for (let i = 0; i < allFeaturedArtists.length; i++) {
+        const artist = allFeaturedArtists[i];
+        ids += artist;
+        if (i !== allFeaturedArtists.length - 1) {
+            ids += ",";
+        }
+    }
+    try {
+        const response = await fetch(
+            `https://api.spotify.com/v1/artists?ids=${ids}`,
+            {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${access_token}`,
+                },
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Spotify API error: ${response.statusText})`);
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error("cant get data", error);
+    }
+}
+await getArtistsData().then((data) => {
+    allArtistsData = data["artists"];
+});
+
+for (let i = 0; i < featuredArtists.length; i++) {
+    featuredArtistsData.push(new Array());
+    if (featuredArtists[i].length === 0) {
+        continue
+    }
+    for (let j = 0; j < featuredArtists[i].length; j++) {
+        const foundObject = allArtistsData.find(obj => obj["id"] === featuredArtists[i][j])
+        if (!foundObject) {
+            console.error("can't find object :(");
+            continue
+        }
+        if (featuredArtistsData[i].includes(foundObject)) {
+            continue
+        }
+        featuredArtistsData[i].push(foundObject);  
+    }
+}

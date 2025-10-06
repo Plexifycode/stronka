@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { House } from "lucide-react";
 
 const Navigator = function () {
     const navButtons = useRef([]);
@@ -52,7 +53,7 @@ const Navigator = function () {
     return (
         <div
             ref={navElement}
-            className="fixed z-999 grid grid-rows-1 auto-cols-fr grid-flow-col left-1/2 -translate-x-1/2 bottom-0 w-80 h-20 px-8 place-items-center bg-white/10 backdrop-blur-md rounded-t-2xl drop-shadow-[0_0_8px] drop-shadow-black/40 transition-all duration-300 ease"
+            className="fixed z-999 grid grid-rows-1 auto-cols-[3rem] grid-flow-col left-1/2 -translate-x-1/2 bottom-0 h-20 px-8 place-items-center bg-white/10 backdrop-blur-md rounded-t-2xl drop-shadow-[0_0_8px] drop-shadow-black/40 transition-all duration-300 ease"
             onMouseEnter={slideNavUp}
             onMouseLeave={slideNavDown}>
             {albumPages &&
@@ -70,7 +71,7 @@ const Navigator = function () {
                         className="w-6 aspect-square z-5 rounded-full bg-white/40 hover:bg-white/60 hover:scale-140 hover:cursor-pointer active:bg-white/80 active:scale-120 active:blur-[1px] transition-all duration-250 active:duration-75"
                     />
                 ))}
-            <div className="absolute -left-1/8 bottom-0 w-5/4 h-3/2" />
+            <div className="absolute -left-10 bottom-0 w-[calc(100%+5rem)] h-3/2" />
         </div>
     );
 };
