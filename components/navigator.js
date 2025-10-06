@@ -34,11 +34,12 @@ const Navigator = function () {
         }
         navElement.current.classList.add("translate-y-3/4");
     };
-    const [albumPages, setAlbumPages] = useState(null);
+    const [pages, setPages] = useState(null);
     useEffect(() => {
-        const elements = document.getElementsByClassName("album-page");
+        const elements = document.querySelectorAll(`.album-page, #main-page`)
+        console.log(elements)
         const elementsArray = Array.from(elements);
-        setAlbumPages(elementsArray);
+        setPages(elementsArray);
 
         setTimeout(() => {
             moveToPage(0);
@@ -52,8 +53,8 @@ const Navigator = function () {
             className="fixed z-999 grid grid-rows-1 auto-cols-fr grid-flow-col left-1/2 -translate-x-1/2 bottom-0 w-80 h-20 px-8 place-items-center bg-white/10 backdrop-blur-md rounded-t-2xl drop-shadow-[0_0_8px] drop-shadow-black/40 transition-all duration-300 ease"
             onMouseEnter={slideNavUp}
             onMouseLeave={slideNavDown}>
-            {albumPages &&
-                albumPages.map((_, index) => (
+            {pages &&
+                pages.map((_, index) => (
                     <div
                         key={index}
                         ref={(node) => {

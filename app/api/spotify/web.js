@@ -31,7 +31,7 @@ let access_token = null;
 await getBearerToken().then((data) => {
     access_token = data.access_token;
 });
-console.log(access_token);
+
 export async function getAlbumID(query) {
     try {
         const response = await fetch(
@@ -61,5 +61,27 @@ for (let i = 0; i < albumNames.length; i++) {
     await getAlbumID(albumNames[i]).then((data) => {
         singleAlbumData = data;
     })
-    albumData.push(singleAlbumData);
+
+}
+
+export async function getAlbumTracks(id) {
+    try {
+        const response = await fetch(
+            `https://api.spotify.com/v1/albums/${id}/tracks?market=PL&limit=30`,
+            {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${access_token}`,
+                },
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Spotify API error: ${response.statusText})`);
+        }
+        console.log(response.json());
+        return response.json();
+    } catch (error) {
+        console.error("cant get data", error);
+    }
 }
