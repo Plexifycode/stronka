@@ -1,5 +1,5 @@
-import AlbumPage from "../components/albumPage";
-import Navigator from "../components/navigator";
+import AlbumPage from "../components/AlbumPage";
+import Navigator from "../components/Navigator";
 import MainPage from "../components/MainPage";
 
 
