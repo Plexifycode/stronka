@@ -1,79 +1,56 @@
-"use client";
+"use client"
 
-import { useEffect, useState, useRef } from "react";
-import { House } from "lucide-react";
+import { useState, useEffect } from 'react'
 
-const Navigator = function () {
-    const navButtons = useRef([]);
-    const moveToPage = function (pageIndex) {
-        const clickedButton = navButtons.current[pageIndex];
-        if (!clickedButton) {
-            return
-        }
-        if (clickedButton.classList.contains("nav-button-active")) {
-            return;
-        }
-        document.getElementById("app").style.left = `-${100 * pageIndex}vw`;
-        for (let i = 0; i < navButtons.current.length; i++) {
-            const iNavButton = navButtons.current[i];
-            if (iNavButton.classList.contains("nav-button-active")) {
-                iNavButton.className =
-                    "w-6 aspect-square z-5 rounded-full bg-white/40 hover:bg-white/60 hover:scale-140 hover:cursor-pointer active:bg-white/80 active:scale-120 active:blur-[1px] transition-all duration-250 active:duration-75";
-            }
-        }
-        clickedButton.className =
-            "w-6 aspect-square z-5 rounded-full bg-green-300/40 hover:bg-green-300/60 scale-130 nav-button-active hover:scale-140 hover:cursor-pointer active:bg-green-300/80 active:scale-120 active:blur-[1px] transition-all duration-250 active:duration-75";
-    };
 
-    const navElement = useRef(null);
-    const slideNavUp = function () {
-        if (!navElement.current.classList.contains("translate-y-3/4")) {
-            return;
-        }
-        navElement.current.classList.remove("translate-y-3/4");
-    };
-    const slideNavDown = function () {
-        if (navElement.current.classList.contains("translate-y-3/4")) {
-            return;
-        }
-        navElement.current.classList.add("translate-y-3/4");
-    };
-    const [albumPages, setAlbumPages] = useState(null);
+const Navigator = ({activeIndex, setActiveIndex, pageIndexes}) => {
+   const [isNavbarHidden, setIsNavbarHidden] = useState(true);
+   const [lastActiveIndex, setLastActiveIndex] = useState(0)
+
+  const slideNavUp = () => {
+    setIsNavbarHidden(false);
+  }
+
+  const slideNavDown = () => {
+    setIsNavbarHidden(true);
+  }
+
+  console.log(lastActiveIndex, activeIndex, lastActiveIndex !== activeIndex)
+
     useEffect(() => {
-        const elements = document.getElementsByClassName("album-page");
-        const elementsArray = Array.from(elements);
-        setAlbumPages(elementsArray);
+      if (lastActiveIndex !== activeIndex) {
+      setTimeout(() => {
+        slideNavUp();
+      }, 500);
 
-        setTimeout(() => {
-            moveToPage(0);
-        }, 200);
+      setTimeout(() => {
+        slideNavDown();;
+      }, 2000);
+    };
+    }, [activeIndex])
+  return (
+    <div 
+      onMouseEnter={slideNavUp}
+      onMouseLeave={slideNavDown}
+      className={`
+         
+      grid grid-rows-1 grid-flow-col auto-cols-[3rem] fixed left-1/2 -translate-x-1/2 -bottom-2 z-999  drop-shadow-[0_0_8px] drop-shadow-black/40 backdrop-blur-md transition-all duration-300 h-20 px-8 place-items-center bg-white/10 rounded-t-2xl
+      ${isNavbarHidden ? "translate-y-3/4" : ""}
+      ${activeIndex === 0 && "opacity-0 pointer-events-none "}
+      `}>
+        {pageIndexes.map((_, index) => (
+          <button className={`
+            ${activeIndex !== index ? "bg-white/40 hover:bg-white/60 active:bg-white/80 active:scale-120 " : "bg-green-300/40 hover:bg-green-300/60 scale-130 active:bg-green-300/80"}
+            w-6 aspect-square z-5 rounded-full  hover:scale-140 hover:cursor-pointer active:blur-[1px]  transition-all duration-250 active:duration-75
+            `}
+          key={index} 
+          disabled={activeIndex === 0}
+          onClick={() => { setActiveIndex(index); setLastActiveIndex(index) }} >
+            
+          </button>
+        ))}
+    </div>
+  )
+}
 
-        setTimeout(slideNavDown, 1500);
-    }, []);
-    return (
-        <div
-            ref={navElement}
-            className="fixed z-999 grid grid-rows-1 auto-cols-[3rem] grid-flow-col left-1/2 -translate-x-1/2 bottom-0 h-20 px-8 place-items-center bg-white/10 backdrop-blur-md rounded-t-2xl drop-shadow-[0_0_8px] drop-shadow-black/40 transition-all duration-300 ease"
-            onMouseEnter={slideNavUp}
-            onMouseLeave={slideNavDown}>
-            {albumPages &&
-                albumPages.map((_, index) => (
-                    <div
-                        key={index}
-                        ref={(node) => {
-                            if (node) {
-                                navButtons.current[index] = node;
-                            }
-                        }}
-                        onClick={() => {
-                            moveToPage(index);
-                        }}
-                        className="w-6 aspect-square z-5 rounded-full bg-white/40 hover:bg-white/60 hover:scale-140 hover:cursor-pointer active:bg-white/80 active:scale-120 active:blur-[1px] transition-all duration-250 active:duration-75"
-                    />
-                ))}
-            <div className="absolute -left-10 bottom-0 w-[calc(100%+5rem)] h-3/2" />
-        </div>
-    );
-};
-
-export default Navigator;
+export default Navigator

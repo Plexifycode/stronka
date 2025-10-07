@@ -1,5 +1,3 @@
-import { Arapey } from "next/font/google";
-import React from "react";
 
 export async function getBearerToken() {
     const env_client_id = process.env.SPOTIFY_CLIENT_ID;
