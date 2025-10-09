@@ -27,7 +27,7 @@ const Navigator = ({activeIndex, setActiveIndex, pageIndexes}) => {
         slideNavDown();;
       }, 2000);
     };
-    }, [activeIndex])
+    }, [activeIndex, lastActiveIndex])
   return (
     <div 
       onMouseEnter={slideNavUp}
