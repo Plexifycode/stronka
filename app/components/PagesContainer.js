@@ -32,7 +32,7 @@ const PagesContainer = ({activeIndex, setActiveIndex, setPageIndexes, albumsData
                 console.log(`Liczba zliczonych stron: ${pageCount}.`);
             }, 0);
         }
-    }, []);
+    }, [setPageIndexes]);
 
     // Obliczanie transformacji
     const transformStyle = `translateX(-${activeIndex * 100}vw)`;
