@@ -39,3 +39,19 @@ body {
 
     background-attachment: fixed;
 }
+
+.mainPageImage {
+    -webkit-mask-image: linear-gradient(45deg,#ffffff 25%,rgba(255, 255, 255, 0.2) 50%,#ffffff 75%);
+    mask-image: linear-gradient(45deg,#ffffff 25%,rgba(255, 255, 255, 0.2) 50%,#ffffff 75%);
+    -webkit-mask-size: 800%;
+    mask-size: 800%;
+    -webkit-mask-position: 0;
+    mask-position: 0;
+}
+
+.mainPageImage:hover {
+    transition: mask-position 2s ease,-webkit-mask-position 1s ease;
+    -webkit-mask-position: 120%;
+    mask-position: 120%;
+    opacity: 1;
+}

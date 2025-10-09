@@ -49,7 +49,7 @@ const TimeLine = ({albumsData, setActiveIndex}) => {
   return (
       <div className="grid relative grid-rows-2 grid-cols-6 gap-x-10 xl:gap-y-[60%] lg:gap-y-[60%]  gap-y-[90%] items-center w-full justify-items-center">
         {albumsData.map((album, index) => (
-            <Image onClick={() => {setActiveIndex(index+1)}} className="cursor-pointer hover:scale-105 transition rounded-md drop-shadow-xl" key={index} src={album["images"][0]["url"]} alt="" width={160} height={160}/>
+            <Image onClick={() => {setActiveIndex(index+1)}} className="cursor-pointer hover:scale-105 transition rounded-md drop-shadow-xl mainPageImage" key={index} src={album["images"][0]["url"]} alt="" width={160} height={160}/>
         ))}
 
         <div className="absolute w-[86%] xl:bottom-[50%] lg:bottom-[50%] bottom-[60%] border-t-white border-t-2 h-auto flex items-center justify-between">

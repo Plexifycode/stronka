@@ -37,8 +37,8 @@ export default function AlbumPage({
                 className="grid grid-cols-2 grid-rows-1 grid-flow-col place-items-center overflow-hidden rounded-4xl relative border border-white/15 col-span-2 maskimage p-6"
                 style={{ backgroundImage: `url(${albumCover})` }}>
                 <div className="bg-black/50 z-0 w-full h-full absolute top-0 left-0 backdrop-blur-md" />
-                <div className="relative flex gap-6 z-1 h-full w-full before:absolute before:w-[1px] before:h-[calc(100%+3rem)] before:-top-6 before:right-0 before:bg-white/15">
-                    <div className="h-3/5 aspect-square">
+                <div className="relative flex gap-6 z-1 h-full w-full before:absolute before:w-[1px] before:h-[calc(100%+3rem)] before:-top-4 before:right-0 before:bg-white/15">
+                    <div className="h-3/5 aspect-square self-center ml-30">
                         <Image
                             src={albumCover}
                             width={640}
@@ -46,7 +46,7 @@ export default function AlbumPage({
                             alt="smaller album cover"
                             className="rounded-lg"></Image>
                     </div>
-                    <div className="text-gray-300 h-3/5 grid grid-cols-1 grid-rows-[auto_1fr] gap-8 py-4">
+                    <div className="text-gray-300 h-3/5 grid grid-cols-1 grid-rows-[auto_1fr] gap-8 py-4 self-center ">
                         <h1 className="text-white text-4xl font-extrabold">
                             {albumName}
                         </h1>
